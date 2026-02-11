@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kabarin_app/pages/common/routes/routes.dart';
+
+import '../store/config.dart';
+import '../store/user.dart';
+
+/// 第一次欢迎页面
+class RouteWelcomeMiddleware extends GetMiddleware {
+  // priority 数字小优先级高
+  @override
+  int? priority = 0;
+
+  RouteWelcomeMiddleware({required this.priority});
+
+  @override
+  RouteSettings? redirect(String? route) {
+    if (ConfigStore.to.isFirstOpen == false) {
+      return null;
+    } else if (UserStore.to.isLogin == true) {
+      return RouteSettings(name: AppRoutes.Message);
+    } else {
+      return RouteSettings(name: AppRoutes.SIGN_IN);
+    }
+  }
+}

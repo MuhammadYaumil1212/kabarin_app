@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1030142167543",
+    "project_id": "flutter-kabarin-app",
+    "storage_bucket": "flutter-kabarin-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030142167543:android:7959a851614641c7de86f2",
+        "android_client_info": {
+          "package_name": "com.example.kabarin_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCavEtZ5py_7EqprwNAlZ5IZ8fkhai1A8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1030142167543-64pm2cjl85gmlalgnguhqtq3g4vn53uo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kabarinApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
