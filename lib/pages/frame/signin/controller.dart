@@ -10,14 +10,13 @@ class SignInController extends GetxController {
   SignInController();
   final state = MessageState();
   final scopes = ['email', 'profile'];
-  final serverClientId = "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com";
+  final serverClientId =
+      "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com";
   final _auth = FirebaseAuth.instance;
 
   Future<void> signInWithGoogle() async {
     try {
-      await GoogleSignIn.instance.initialize(
-        serverClientId:serverClientId
-      );
+      await GoogleSignIn.instance.initialize(serverClientId: serverClientId);
       final GoogleSignInAccount accountUser = await GoogleSignIn.instance
           .authenticate(scopeHint: scopes);
       final GoogleSignInAuthentication googleAuth = accountUser.authentication;
@@ -32,7 +31,6 @@ class SignInController extends GetxController {
       loginRequestEntity.name = userAcc?.displayName;
       loginRequestEntity.open_id = userAcc?.uid;
       loginRequestEntity.type = 2;
-      print("login username : ${loginRequestEntity.name}");
     } on FirebaseAuthException catch (error) {
       throw Exception(error.message);
     }
