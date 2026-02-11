@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kabarin_app/global.dart';
 import 'package:kabarin_app/pages/common/routes/pages.dart';
+import 'package:kabarin_app/pages/common/style/style.dart';
 import 'package:kabarin_app/pages/common/values/strings.dart';
 
 void main() async {
@@ -21,9 +22,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: AppStrings.AppName,
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-          ),
+          theme: AppTheme.light,
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
         );

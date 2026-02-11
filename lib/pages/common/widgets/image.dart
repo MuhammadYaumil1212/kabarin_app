@@ -5,6 +5,7 @@ import '../values/radii.dart';
 
 Widget netImageCached(
   String url, {
+  Color color = Colors.black,
   double width = 48,
   double height = 48,
   EdgeInsetsGeometry? margin,
@@ -38,7 +39,11 @@ Widget netImageCached(
             },
         errorBuilder:
             (BuildContext context, Object exception, StackTrace? stackTrace) {
-              return Image.asset("assets/images/jpg.jpg", fit: BoxFit.cover);
+              return Image.asset(
+                "assets/images/notfound.png",
+                color: color,
+                fit: BoxFit.cover,
+              );
             },
       ),
     ),

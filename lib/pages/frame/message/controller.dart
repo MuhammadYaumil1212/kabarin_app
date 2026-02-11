@@ -6,12 +6,5 @@ class MessageController extends GetxController {
   MessageController();
   final state = MessageState();
 
-  @override
-  void onReady() {
-    Future.delayed(
-      const Duration(milliseconds: 3000),
-      () => Get.offAllNamed(AppRoutes.Message),
-    );
-    super.onReady();
-  }
+  void goToProfile() async => await Get.offAllNamed(AppRoutes.Profile);
 }

@@ -40,7 +40,7 @@ class SignInController extends GetxController {
       if (userAcc != null) {
         UserItem userItem = UserItem(
           access_token: loginRequestEntity.open_id,
-          token: await userAcc.getIdToken(true),
+          token: await userAcc.getIdToken(false),
           name: loginRequestEntity.name ?? loginRequestEntity.phone,
           avatar: loginRequestEntity.avatar,
           description: loginRequestEntity.description,
@@ -66,11 +66,6 @@ class SignInController extends GetxController {
       printError(info: "Error Auth : ${e.message}");
       throw Exception(e.message ?? "Something happened");
     }
-  }
-
-  void signOut() async {
-    await _auth.signOut();
-    await GoogleSignIn.instance.signOut();
   }
 
   @override

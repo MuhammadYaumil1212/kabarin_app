@@ -15,8 +15,12 @@ class AppTheme {
       secondary: AppColor.accentColor,
     ),
     appBarTheme: AppBarTheme(
-      elevation: 0,
+      elevation: 0.0,
+      scrolledUnderElevation: 0.0,
       centerTitle: true,
+      surfaceTintColor: Colors.white,
+      foregroundColor: Colors.white,
+      shadowColor: Colors.white,
       backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: AppColor.primaryText),
       titleTextStyle: TextStyle(
