@@ -16,13 +16,18 @@ class SignInController extends GetxController {
 
   Future<void> signInWithGoogle() async {
     try {
+      //init server client id
       await GoogleSignIn.instance.initialize(serverClientId: serverClientId);
+      //init scopes of login
       final GoogleSignInAccount accountUser = await GoogleSignIn.instance
           .authenticate(scopeHint: scopes);
+      //get auth info
       final GoogleSignInAuthentication googleAuth = accountUser.authentication;
+      //set token credential from auth info
       final credentials = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
+      //sign in & get user info
       final userCredentials = await _auth.signInWithCredential(credentials);
       final userAcc = userCredentials.user;
       LoginRequestEntity loginRequestEntity = LoginRequestEntity();
