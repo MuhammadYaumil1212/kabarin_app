@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kabarin_app/pages/common/values/values.dart';
 
 import '../values/radii.dart';
 
@@ -11,22 +9,38 @@ Widget netImageCached(
   double height = 48,
   EdgeInsetsGeometry? margin,
 }) {
-  return CachedNetworkImage(
-    imageUrl: url,
-    imageBuilder: (context, imageProvider) => Container(
-      height: height.h,
-      width: width.w,
-      margin: margin,
-      decoration: BoxDecoration(
-        borderRadius: Radii.k54pxRadius,
-        image: DecorationImage(
-          image: imageProvider,
-          fit: BoxFit.cover,
-          // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
-        ),
+  return Container(
+    height: height.h,
+    width: width.w,
+    margin: margin,
+    child: ClipRRect(
+      borderRadius: Radii.k54pxRadius,
+      child: Image.network(
+        url,
+        fit: BoxFit.cover,
+        loadingBuilder:
+            (
+              BuildContext context,
+              Widget child,
+              ImageChunkEvent? loadingProgress,
+            ) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              );
+            },
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+              return Image.asset("assets/images/jpg.jpg", fit: BoxFit.cover);
+            },
       ),
     ),
-    errorWidget: (context, url, error) =>
-        Image(image: AssetImage('assets/images/feature-1.png')),
   );
 }
