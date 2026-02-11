@@ -15,20 +15,20 @@ class AppPages {
   static final List<GetPage> routes = [
     GetPage(
       name: AppRoutes.INITIAL,
-      page: () => WelcomeView(),
+      page: () => const WelcomeView(),
       binding: WelcomeBinding(),
     ),
 
     GetPage(
       name: AppRoutes.Message,
-      page: () => MessageView(),
+      page: () => const MessageView(),
       middlewares: [RouteAuthMiddleware(priority: 1)],
       binding: MessageBinding(),
     ),
 
     GetPage(
       name: AppRoutes.SIGN_IN,
-      page: () => SignInView(),
+      page: () => const SignInView(),
       binding: SignInBinding(),
     ),
   ];

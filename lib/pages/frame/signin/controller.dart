@@ -5,6 +5,7 @@ import 'package:kabarin_app/pages/common/routes/names.dart';
 import 'package:kabarin_app/pages/frame/message/state.dart';
 
 import '../../common/entities/user.dart';
+import '../../common/store/user.dart';
 
 class SignInController extends GetxController {
   SignInController();
@@ -36,6 +37,19 @@ class SignInController extends GetxController {
       loginRequestEntity.name = userAcc?.displayName;
       loginRequestEntity.open_id = userAcc?.uid;
       loginRequestEntity.type = 2;
+      if (userAcc != null) {
+        UserItem userItem = UserItem(
+          access_token: userAcc.uid,
+          token: userAcc.uid,
+          name: userAcc.displayName ?? "Unknown",
+          avatar: userAcc.photoURL,
+          description: "",
+          online: 1,
+          type: 2,
+        );
+        await UserStore.to.saveProfile(userItem);
+        await Get.offAllNamed(AppRoutes.Message);
+      }
     } on FirebaseAuthException catch (error) {
       throw Exception(error.message);
     }
