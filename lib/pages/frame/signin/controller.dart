@@ -32,20 +32,20 @@ class SignInController extends GetxController {
       final userCredentials = await _auth.signInWithCredential(credentials);
       final userAcc = userCredentials.user;
       LoginRequestEntity loginRequestEntity = LoginRequestEntity();
-      loginRequestEntity.avatar = userAcc?.photoURL;
-      loginRequestEntity.email = userAcc?.email;
-      loginRequestEntity.name = userAcc?.displayName;
       loginRequestEntity.open_id = userAcc?.uid;
+      loginRequestEntity.avatar = userAcc?.photoURL;
+      loginRequestEntity.phone = userAcc?.phoneNumber;
+      loginRequestEntity.name = userAcc?.displayName;
       loginRequestEntity.type = 2;
       if (userAcc != null) {
         UserItem userItem = UserItem(
-          access_token: userAcc.uid,
-          token: userAcc.uid,
-          name: userAcc.displayName ?? "Unknown",
-          avatar: userAcc.photoURL,
-          description: "",
-          online: 1,
-          type: 2,
+          access_token: loginRequestEntity.open_id,
+          token: await userAcc.getIdToken(true),
+          name: loginRequestEntity.name ?? loginRequestEntity.phone,
+          avatar: loginRequestEntity.avatar,
+          description: loginRequestEntity.description,
+          online: loginRequestEntity.online,
+          type: loginRequestEntity.type,
         );
         await UserStore.to.saveProfile(userItem);
         await Get.offAllNamed(AppRoutes.Message);
