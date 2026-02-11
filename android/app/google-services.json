@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1030142167543-rneiuefh6c57mihgh0h9ku2veipngrui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kabarin_app",
+            "certificate_hash": "04fd09e4a3d491b0e1b74c8dab61dcaae3276a98"
+          }
+        },
+        {
           "client_id": "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com",
           "client_type": 3
         }

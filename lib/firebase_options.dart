@@ -63,6 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1030142167543',
     projectId: 'flutter-kabarin-app',
     storageBucket: 'flutter-kabarin-app.firebasestorage.app',
+    androidClientId: '1030142167543-rneiuefh6c57mihgh0h9ku2veipngrui.apps.googleusercontent.com',
+    iosClientId: '1030142167543-64pm2cjl85gmlalgnguhqtq3g4vn53uo.apps.googleusercontent.com',
     iosBundleId: 'com.example.kabarinApp',
   );
+
 }

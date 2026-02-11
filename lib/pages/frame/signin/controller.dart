@@ -10,12 +10,14 @@ class SignInController extends GetxController {
   SignInController();
   final state = MessageState();
   final scopes = ['email', 'profile'];
-  final String clientId = "";
-  final String serverId = "";
+  final serverClientId = "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com";
   final _auth = FirebaseAuth.instance;
 
   Future<void> signInWithGoogle() async {
     try {
+      await GoogleSignIn.instance.initialize(
+        serverClientId:serverClientId
+      );
       final GoogleSignInAccount accountUser = await GoogleSignIn.instance
           .authenticate(scopeHint: scopes);
       final GoogleSignInAuthentication googleAuth = accountUser.authentication;
