@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kabarin_app/pages/common/routes/names.dart';
 import 'package:kabarin_app/pages/common/style/color.dart';
 import 'package:kabarin_app/pages/frame/message/controller.dart';
 
@@ -13,6 +14,13 @@ class MessageView extends GetView<MessageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.scaffoldBackground,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.offAllNamed(AppRoutes.Contact),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+        ),
+        child: Icon(Icons.message_outlined),
+      ),
       body: SafeArea(
         child: Stack(
           children: [

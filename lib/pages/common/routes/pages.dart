@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kabarin_app/pages/common/middlewares/middlewares.dart';
+import 'package:kabarin_app/pages/frame/contact/bindings.dart';
+import 'package:kabarin_app/pages/frame/contact/view.dart';
 import 'package:kabarin_app/pages/frame/message/index.dart';
 import 'package:kabarin_app/pages/frame/profile/bindings.dart';
 import 'package:kabarin_app/pages/frame/profile/view.dart';
@@ -38,6 +40,12 @@ class AppPages {
       name: AppRoutes.Profile,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.Contact,
+      page: () => const ContactView(),
+      binding: ContactBinding(),
     ),
   ];
 }
