@@ -29,15 +29,8 @@ class SignInController extends GetxController {
       //init server client id
       await GoogleSignIn.instance.initialize(serverClientId: serverClientId);
       //init scopes of login
-      final GoogleSignInAccount? accountUser = await GoogleSignIn.instance
+      final GoogleSignInAccount accountUser = await GoogleSignIn.instance
           .authenticate(scopeHint: scopes);
-
-      if (accountUser == null) {
-        EasyLoading.dismiss(animation: true);
-        EasyLoading.showError("Something happened");
-        return;
-      }
-
       //get auth info
       final GoogleSignInAuthentication googleAuth = accountUser.authentication;
       //set token credential from auth info
@@ -67,8 +60,9 @@ class SignInController extends GetxController {
         _saveUserToFirestore(userAcc, userItem);
         //save to local db
         await UserStore.to.saveProfile(userItem);
-        if (userItem.token != null) {
+        if (userItem.token != null && userItem.access_token != null) {
           await UserStore.to.setToken(userItem.token!);
+          await UserStore.to.setAccessToken(userItem.access_token!);
         }
         EasyLoading.dismiss(animation: true);
         //go to next page
@@ -82,7 +76,6 @@ class SignInController extends GetxController {
       throw Exception(error.message);
     } catch (error) {
       final errorMessage = error.toString();
-
       if (errorMessage.contains('canceled') ||
           errorMessage.contains('GoogleSignInExceptionCode.canceled')) {
         EasyLoading.dismiss(animation: true);
