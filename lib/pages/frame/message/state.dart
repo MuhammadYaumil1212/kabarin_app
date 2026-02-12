@@ -3,4 +3,6 @@ import 'package:kabarin_app/pages/common/entities/entities.dart';
 
 class MessageState {
   var headDetail = UserItem().obs;
+  var name = "".obs;
+  var avatar = "".obs;
 }

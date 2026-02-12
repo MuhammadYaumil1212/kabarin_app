@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:kabarin_app/pages/common/style/color.dart';
 import 'package:kabarin_app/pages/frame/message/controller.dart';
 
@@ -21,13 +21,15 @@ class MessageView extends GetView<MessageController> {
                 SliverAppBar(
                   pinned: true,
                   scrolledUnderElevation: 0.0,
-                  title: _buildHeader(
-                    onTap: () => controller.goToProfile(),
-                    urlImage: controller.state.headDetail.value.avatar == null
-                        ? ""
-                        : "",
-                    displayName: "Muhammad Yaumil Ramadhani",
-                    status: true,
+                  title: Obx(
+                    () => _buildHeader(
+                      onTap: () => controller.goToProfile(),
+                      urlImage: controller.state.headDetail.value.avatar == null
+                          ? ""
+                          : controller.state.avatar.value,
+                      displayName: controller.state.name.value,
+                      status: true,
+                    ),
                   ),
                 ),
               ],
@@ -114,7 +116,7 @@ class MessageView extends GetView<MessageController> {
     );
   }
 
-  Widget _buildNavigation(){
+  Widget _buildNavigation() {
     return Container();
   }
 }
