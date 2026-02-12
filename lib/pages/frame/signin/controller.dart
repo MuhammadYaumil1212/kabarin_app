@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kabarin_app/pages/common/routes/names.dart';
@@ -14,14 +17,27 @@ class SignInController extends GetxController {
   final serverClientId =
       "1030142167543-hme9aqvovher04ki3j32le10044luv06.apps.googleusercontent.com";
   final _auth = FirebaseAuth.instance;
+  final _db = FirebaseFirestore.instance;
 
   Future<void> signInWithGoogle() async {
     try {
+      EasyLoading.show(
+        indicator: CircularProgressIndicator(),
+        maskType: .clear,
+        status: "Loading...",
+      );
       //init server client id
       await GoogleSignIn.instance.initialize(serverClientId: serverClientId);
       //init scopes of login
-      final GoogleSignInAccount accountUser = await GoogleSignIn.instance
+      final GoogleSignInAccount? accountUser = await GoogleSignIn.instance
           .authenticate(scopeHint: scopes);
+
+      if (accountUser == null) {
+        EasyLoading.dismiss(animation: true);
+        EasyLoading.showError("Something happened");
+        return;
+      }
+
       //get auth info
       final GoogleSignInAuthentication googleAuth = accountUser.authentication;
       //set token credential from auth info
@@ -31,12 +47,12 @@ class SignInController extends GetxController {
       //sign in & get user info
       final userCredentials = await _auth.signInWithCredential(credentials);
       final userAcc = userCredentials.user;
-      LoginRequestEntity loginRequestEntity = LoginRequestEntity();
-      loginRequestEntity.open_id = userAcc?.uid;
-      loginRequestEntity.avatar = userAcc?.photoURL;
-      loginRequestEntity.phone = userAcc?.phoneNumber;
-      loginRequestEntity.name = userAcc?.displayName;
-      loginRequestEntity.type = 2;
+      final loginRequestEntity = LoginRequestEntity()
+        ..open_id = userAcc?.uid
+        ..avatar = userAcc?.photoURL
+        ..phone = userAcc?.phoneNumber
+        ..name = userAcc?.displayName
+        ..type = 2;
       if (userAcc != null) {
         UserItem userItem = UserItem(
           access_token: loginRequestEntity.open_id,
@@ -47,12 +63,40 @@ class SignInController extends GetxController {
           online: loginRequestEntity.online,
           type: loginRequestEntity.type,
         );
+        //save to firestore
+        _saveUserToFirestore(userAcc, userItem);
+        //save to local db
         await UserStore.to.saveProfile(userItem);
+        if (userItem.token != null) {
+          await UserStore.to.setToken(userItem.token!);
+        }
+        EasyLoading.dismiss(animation: true);
+        //go to next page
         await Get.offAllNamed(AppRoutes.Message);
+      } else {
+        EasyLoading.dismiss(animation: true);
+        EasyLoading.showError("Something happened");
       }
     } on FirebaseAuthException catch (error) {
+      EasyLoading.dismiss(animation: true);
       throw Exception(error.message);
+    } catch (error) {
+      final errorMessage = error.toString();
+
+      if (errorMessage.contains('canceled') ||
+          errorMessage.contains('GoogleSignInExceptionCode.canceled')) {
+        EasyLoading.dismiss(animation: true);
+        EasyLoading.showError(errorMessage.split(':')[1]);
+        return;
+      }
     }
+  }
+
+  Future<void> _saveUserToFirestore(User userAcc, UserItem userItem) async {
+    await _db
+        .collection("users")
+        .doc(userAcc.uid)
+        .set(userItem.toJson(), SetOptions(merge: true));
   }
 
   Future<User?> signUpWithGoogle(String email, String password) async {

@@ -113,4 +113,8 @@ class MessageView extends GetView<MessageController> {
       ),
     );
   }
+
+  Widget _buildNavigation(){
+    return Container();
+  }
 }
