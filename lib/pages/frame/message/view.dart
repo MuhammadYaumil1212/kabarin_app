@@ -24,9 +24,7 @@ class MessageView extends GetView<MessageController> {
                   title: Obx(
                     () => _buildHeader(
                       onTap: () => controller.goToProfile(),
-                      urlImage: controller.state.headDetail.value.avatar == null
-                          ? ""
-                          : controller.state.avatar.value,
+                      urlImage: controller.state.avatar.value,
                       displayName: controller.state.name.value,
                       status: true,
                     ),
@@ -62,7 +60,9 @@ class MessageView extends GetView<MessageController> {
                     color: AppColors.primaryElementStatus,
                     borderRadius: BorderRadius.all(Radius.circular(100)),
                     image: DecorationImage(
-                      image: AssetImage("assets/images/man_ava.jpg"),
+                      image: urlImage.isNotEmpty
+                          ? NetworkImage(urlImage)
+                          : AssetImage("assets/images/man_ava.jpg"),
                       fit: .cover,
                     ),
                   ),
