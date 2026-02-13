@@ -1,27 +1,25 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContactResponseEntity {
   int? code;
   String? msg;
   List<ContactItem>? data;
 
-  ContactResponseEntity({
-    this.code,
-    this.msg,
-    this.data,
-  });
+  ContactResponseEntity({this.code, this.msg, this.data});
   factory ContactResponseEntity.fromJson(Map<String, dynamic> json) =>
       ContactResponseEntity(
         code: json["code"],
         msg: json["msg"],
         data: json["data"] == null
             ? []
-            : List<ContactItem>.from(json["data"].map((x) => ContactItem.fromJson(x))),
+            : List<ContactItem>.from(
+                json["data"].map((x) => ContactItem.fromJson(x)),
+              ),
       );
 
   Map<String, dynamic> toJson() => {
-    "counts": code ,
-    "msg": msg ,
+    "counts": code,
+    "msg": msg,
     "data": data == null
         ? []
         : List<dynamic>.from(data!.map((x) => x.toJson())),
@@ -44,14 +42,13 @@ class ContactItem {
     this.online,
   });
 
-  factory ContactItem.fromJson(Map<String, dynamic> json) =>
-      ContactItem(
-        token: json["token"],
-        name: json["name"],
-        description: json["description"],
-        avatar: json["avatar"],
-        online: json["online"],
-      );
+  factory ContactItem.fromJson(Map<String, dynamic> json) => ContactItem(
+    token: json["token"],
+    name: json["name"],
+    description: json["description"],
+    avatar: json["avatar"],
+    online: json["online"],
+  );
 
   Map<String, dynamic> toJson() => {
     "token": token,
@@ -60,7 +57,18 @@ class ContactItem {
     "avatar": avatar,
     "online": online,
   };
+
+  factory ContactItem.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return ContactItem(
+      token: data?['token'],
+      name: data?['name'],
+      avatar: data?['avatar'],
+      description: data?['description'],
+      online: data?['online'],
+    );
+  }
 }
-
-
-

@@ -32,7 +32,21 @@ class ContactView extends GetView<ContactController> {
           ),
         ),
       ),
-      body: SafeArea(child: Center(child: Text("Contact Page"))),
+      body: Obx(
+        () => CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: .symmetric(vertical: 0.w, horizontal: 0.w),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final item = controller.state.contacts[index];
+                  return ListTile(title: Text(item.name ?? "No Name"));
+                }, childCount: controller.state.contacts.length),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
