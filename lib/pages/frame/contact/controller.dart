@@ -103,7 +103,16 @@ class ContactController extends GetxController {
         },
       );
     } else {
-      Get.snackbar("Error", "Something Happened, please try again");
+      Get.offAllNamed(
+        AppRoutes.Chat,
+        parameters: {
+          "doc_id": 0.toString(),
+          "to_token": item.token ?? "",
+          "to_name": item.name ?? "",
+          "to_avatar": item.avatar ?? "",
+          "to_online": item.online.toString(),
+        },
+      );
     }
   }
 }
