@@ -41,7 +41,10 @@ class ContactView extends GetView<ContactController> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final item = controller.state.contacts[index];
-                  return ContactItemList(item: item);
+                  return ContactItemList(
+                    onTap: () => controller.goToChat(item),
+                    item: item,
+                  );
                 }, childCount: controller.state.contacts.length),
               ),
             ),

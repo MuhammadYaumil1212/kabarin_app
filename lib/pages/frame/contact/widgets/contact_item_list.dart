@@ -4,13 +4,14 @@ import 'package:kabarin_app/pages/common/entities/entities.dart';
 import '../../../common/style/color.dart';
 
 class ContactItemList extends StatelessWidget {
+  final VoidCallback onTap;
   final ContactItem item;
-  const ContactItemList({super.key, required this.item});
+  const ContactItemList({super.key, required this.item, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: onTap,
       leading: Container(
         width: 45,
         height: 45,

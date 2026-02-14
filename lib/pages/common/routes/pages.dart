@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kabarin_app/pages/common/middlewares/middlewares.dart';
+import 'package:kabarin_app/pages/frame/chat/bindings.dart';
+import 'package:kabarin_app/pages/frame/chat/view.dart';
 import 'package:kabarin_app/pages/frame/contact/bindings.dart';
 import 'package:kabarin_app/pages/frame/contact/view.dart';
 import 'package:kabarin_app/pages/frame/message/index.dart';
@@ -46,6 +48,19 @@ class AppPages {
       name: AppRoutes.Contact,
       page: () => const ContactView(),
       binding: ContactBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.Chat,
+      page: () {
+        final args = Get.parameters as Map<String, dynamic>? ?? {};
+        return ChatView(
+          toName: args['to_name'] ?? "Unknown Name",
+          toAvatar: args['to_avatar'] ?? "",
+          toOnline: args['to_online'] ?? 0.toString(),
+        );
+      },
+      binding: ChatBinding(),
     ),
   ];
 }
