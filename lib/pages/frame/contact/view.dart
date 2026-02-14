@@ -43,8 +43,8 @@ class ContactView extends GetView<ContactController> {
                   return ListTile(
                     onTap: () {},
                     leading: Container(
-                      width: 30,
-                      height: 30,
+                      width: 45,
+                      height: 45,
                       decoration: BoxDecoration(
                         borderRadius: .all(Radius.circular(100)),
                         color: AppColor.pinkColor,
