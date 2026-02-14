@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kabarin_app/pages/common/style/color.dart';
 import 'package:kabarin_app/pages/frame/contact/controller.dart';
+import 'package:kabarin_app/pages/frame/contact/widgets/contact_item_list.dart';
 
 import '../../common/values/colors.dart';
 
@@ -40,42 +41,7 @@ class ContactView extends GetView<ContactController> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final item = controller.state.contacts[index];
-                  return ListTile(
-                    onTap: () {},
-                    leading: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        borderRadius: .all(Radius.circular(100)),
-                        color: AppColor.pinkColor,
-                        image: (item.avatar != null && item.avatar!.isNotEmpty)
-                            ? DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(item.avatar!),
-                              )
-                            : null,
-                      ),
-                      child: (item.avatar == null || item.avatar!.isEmpty)
-                          ? Center(
-                              child: Text(
-                                (item.name != null && item.name!.isNotEmpty)
-                                    ? item.name![0].toUpperCase()
-                                    : "?",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            )
-                          : null,
-                    ),
-                    title: Text(
-                      overflow: .ellipsis,
-                      maxLines: 2,
-                      item.name ?? "No Name",
-                    ),
-                  );
+                  return ContactItemList(item: item);
                 }, childCount: controller.state.contacts.length),
               ),
             ),
