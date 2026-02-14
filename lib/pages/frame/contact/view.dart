@@ -70,7 +70,11 @@ class ContactView extends GetView<ContactController> {
                             )
                           : null,
                     ),
-                    title: Text(item.name ?? "No Name"),
+                    title: Text(
+                      overflow: .ellipsis,
+                      maxLines: 2,
+                      item.name ?? "No Name",
+                    ),
                   );
                 }, childCount: controller.state.contacts.length),
               ),
