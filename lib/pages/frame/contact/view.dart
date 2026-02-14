@@ -41,6 +41,7 @@ class ContactView extends GetView<ContactController> {
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final item = controller.state.contacts[index];
                   return ListTile(
+                    onTap: () {},
                     leading: Container(
                       width: 30,
                       height: 30,
