@@ -40,7 +40,37 @@ class ContactView extends GetView<ContactController> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final item = controller.state.contacts[index];
-                  return ListTile(title: Text(item.name ?? "No Name"));
+                  return ListTile(
+                    leading: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: .all(Radius.circular(100)),
+                        color: AppColor.pinkColor,
+                        image: (item.avatar != null && item.avatar!.isNotEmpty)
+                            ? DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(item.avatar!),
+                              )
+                            : null,
+                      ),
+                      child: (item.avatar == null || item.avatar!.isEmpty)
+                          ? Center(
+                              child: Text(
+                                (item.name != null && item.name!.isNotEmpty)
+                                    ? item.name![0].toUpperCase()
+                                    : "?",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          : null,
+                    ),
+                    title: Text(item.name ?? "No Name"),
+                  );
                 }, childCount: controller.state.contacts.length),
               ),
             ),

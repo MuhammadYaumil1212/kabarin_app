@@ -67,13 +67,27 @@ class MessageView extends GetView<MessageController> {
                   decoration: BoxDecoration(
                     color: AppColors.primaryElementStatus,
                     borderRadius: BorderRadius.all(Radius.circular(100)),
-                    image: DecorationImage(
-                      image: urlImage.isNotEmpty
-                          ? NetworkImage(urlImage)
-                          : AssetImage("assets/images/man_ava.jpg"),
-                      fit: .cover,
-                    ),
+                    image: urlImage.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(urlImage),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
+                  child: urlImage.isEmpty
+                      ? Center(
+                          child: Text(
+                            (urlImage.isNotEmpty)
+                                ? urlImage[0].toUpperCase()
+                                : "?",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        )
+                      : null,
                 ),
                 if (status == true)
                   Positioned(
