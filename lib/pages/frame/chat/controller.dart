@@ -7,4 +7,7 @@ class ChatController extends GetxController {
   final state = ChatState();
 
   void goToContact() => Get.offAllNamed(AppRoutes.Contact);
+  void toggleFeaturePanel() {
+    state.isPanelOpen.value = !state.isPanelOpen.value;
+  }
 }

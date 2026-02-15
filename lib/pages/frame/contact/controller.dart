@@ -84,7 +84,7 @@ class ContactController extends GetxController {
           .add(msgData);
 
       print("Making New Docs.......");
-      print("DocID ; ${docId.id}");
+      print("DocID ; ${fromMessage.docs.first.id}");
       print("fromMessage ; ${fromMessage.docs.length}");
       print("toMessage ; ${toMessage.docs.length}");
       print("toName ; ${item.name}");
@@ -103,16 +103,18 @@ class ContactController extends GetxController {
         },
       );
     } else {
-      Get.offAllNamed(
-        AppRoutes.Chat,
-        parameters: {
-          "doc_id": 0.toString(),
-          "to_token": item.token ?? "",
-          "to_name": item.name ?? "",
-          "to_avatar": item.avatar ?? "",
-          "to_online": item.online.toString(),
-        },
-      );
+      if (fromMessage.docs.first.id.isNotEmpty) {
+        Get.offAllNamed(
+          AppRoutes.Chat,
+          parameters: {
+            "doc_id": fromMessage.docs.first.id,
+            "to_token": item.token ?? "",
+            "to_name": item.name ?? "",
+            "to_avatar": item.avatar ?? "",
+            "to_online": item.online.toString(),
+          },
+        );
+      }
     }
   }
 }
