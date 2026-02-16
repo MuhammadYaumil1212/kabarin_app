@@ -9,6 +9,7 @@ import 'package:kabarin_app/pages/frame/message/index.dart';
 import 'package:kabarin_app/pages/frame/profile/bindings.dart';
 import 'package:kabarin_app/pages/frame/profile/view.dart';
 import 'package:kabarin_app/pages/frame/signin/index.dart';
+import 'package:kabarin_app/pages/frame/voiceCall/index.dart';
 import 'package:kabarin_app/pages/frame/welcome/index.dart';
 
 import 'routes.dart';
@@ -55,12 +56,24 @@ class AppPages {
       page: () {
         final args = Get.parameters as Map<String, dynamic>? ?? {};
         return ChatView(
-          toName: args['to_name'] ?? "Unknown Name",
+          toName: args['to_name'],
           toAvatar: args['to_avatar'] ?? "",
           toOnline: args['to_online'] ?? 0.toString(),
         );
       },
       binding: ChatBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.VoiceCall,
+      page: () {
+        final args = Get.parameters as Map<String, dynamic>? ?? {};
+        return VoiceCallView(
+          toName: args['to_name']!,
+          toAvatar: args['to_avatar'] ?? "",
+        );
+      },
+      binding: VoiceCallBinding(),
     ),
   ];
 }

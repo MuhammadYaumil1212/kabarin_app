@@ -28,14 +28,38 @@ class ChatView extends GetView<ChatController> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: AppColors.thirdElement,
+              ),
               onPressed: () => controller.goToContact(),
             ),
           ),
         ),
         centerTitle: false,
         actionsPadding: .symmetric(horizontal: 20),
-        actions: [InkWell(child: Icon(Icons.more_vert_outlined))],
+        actions: [
+          InkWell(
+            onTap: () => controller.goToVideoCall(),
+            child: Image.asset(
+              "assets/icons/a_video.png",
+              width: 20.w,
+              height: 20.w,
+              color: AppColors.thirdElement,
+            ),
+          ),
+          const SizedBox(width: 10),
+          InkWell(
+            onTap: () => controller.goToVoiceCall(),
+            child: Image.asset(
+              "assets/icons/a_telephone.png",
+              width: 20.w,
+              height: 20.w,
+              color: AppColors.thirdElement,
+            ),
+          ),
+          const SizedBox(width: 10),
+        ],
         title: _buildHeader(
           onTap: () {},
           urlImage: toAvatar,
@@ -147,6 +171,7 @@ class ChatView extends GetView<ChatController> {
               softWrap: true,
               maxLines: 2,
               style: TextStyle(
+                color: AppColors.thirdElement,
                 fontSize: 14.sp,
                 fontWeight: .w500,
                 overflow: .ellipsis,
