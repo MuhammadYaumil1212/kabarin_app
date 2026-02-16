@@ -58,43 +58,52 @@ class VoiceCallView extends GetView<VoiceCallController> {
   }
 
   Widget _buildImageCalling(bool hasAvatarData, String initial) {
-    return Container(
-      width: 120.w,
-      height: 120.h,
-      decoration: BoxDecoration(
-        color: AppColors.primaryElementStatus,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: hasAvatarData
-            ? Image.network(
-                toAvatar,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Center(
+    return Column(
+      children: [
+        Container(
+          width: 120.w,
+          height: 120.h,
+          decoration: BoxDecoration(
+            color: AppColors.primaryElementStatus,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: hasAvatarData
+                ? Image.network(
+                    toAvatar,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Text(
+                          initial,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 50.sp,
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : Center(
                     child: Text(
                       initial,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 50.sp,
+                        fontSize: 30.sp,
                       ),
                     ),
-                  );
-                },
-              )
-            : Center(
-                child: Text(
-                  initial,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30.sp,
                   ),
-                ),
-              ),
-      ),
+          ),
+        ),
+        SizedBox(height: 20.h),
+        Text(
+          toName,
+          style: TextStyle(color: Colors.white, fontSize: 20.sp,fontWeight: .bold),
+        ),
+      ],
     );
   }
 
