@@ -60,6 +60,15 @@ class VoiceCallView extends GetView<VoiceCallController> {
   Widget _buildImageCalling(bool hasAvatarData, String initial) {
     return Column(
       children: [
+        Text(
+          "Waiting time : 5:00",
+          style: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: .bold,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 20.h),
         Container(
           width: 120.w,
           height: 120.h,
@@ -101,7 +110,11 @@ class VoiceCallView extends GetView<VoiceCallController> {
         SizedBox(height: 20.h),
         Text(
           toName,
-          style: TextStyle(color: Colors.white, fontSize: 20.sp,fontWeight: .bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: .bold,
+          ),
         ),
       ],
     );
@@ -109,92 +122,8 @@ class VoiceCallView extends GetView<VoiceCallController> {
 
   Widget _callButtons() {
     return Obx(
-      () => !controller.state.isPickup.value
+      () => controller.state.isJoined.value
           ? Padding(
-              padding: EdgeInsets.only(bottom: 50.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          controller.goToChat(controller.state.contact);
-                        },
-                        child: Container(
-                          width: 75.w,
-                          height: 75.w,
-                          decoration: const BoxDecoration(
-                            color: Colors.redAccent,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                                offset: Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.call_end,
-                            color: Colors.white,
-                            size: 35.w,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 12.h),
-                      Text(
-                        "Decline",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap: () => controller.pickedUp(),
-                        child: Container(
-                          width: 75.w,
-                          height: 75.w,
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade600,
-                            shape: BoxShape.circle,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                                offset: Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.call,
-                            color: Colors.white,
-                            size: 35.w,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 12.h),
-                      Text(
-                        "Accept",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          : Padding(
               padding: EdgeInsets.only(bottom: 50.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -239,6 +168,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          controller.leaveChannel();
                           controller.goToChat(controller.state.contact);
                         },
                         child: Container(
@@ -309,7 +239,94 @@ class VoiceCallView extends GetView<VoiceCallController> {
                   ),
                 ],
               ),
-            ),
+            )
+          : Container(),
+    );
+  }
+
+  Widget _receiverButton() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 50.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          //leave channel
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  controller.leaveChannel();
+                  controller.goToChat(controller.state.contact);
+                },
+                child: Container(
+                  width: 75.w,
+                  height: 75.w,
+                  decoration: const BoxDecoration(
+                    color: Colors.redAccent,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Icon(Icons.call_end, color: Colors.white, size: 35.w),
+                ),
+              ),
+              SizedBox(height: 12.h),
+              Text(
+                "Decline",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          //join channel
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  controller.state.isJoined.value
+                      ? controller.leaveChannel()
+                      : controller.joinChannel();
+                },
+                child: Container(
+                  width: 75.w,
+                  height: 75.w,
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade600,
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Icon(Icons.call, color: Colors.white, size: 35.w),
+                ),
+              ),
+              SizedBox(height: 12.h),
+              Text(
+                "Accept",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
