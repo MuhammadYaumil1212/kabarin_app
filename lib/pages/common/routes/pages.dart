@@ -69,6 +69,7 @@ class AppPages {
       page: () {
         final args = Get.parameters as Map<String, dynamic>? ?? {};
         return VoiceCallView(
+          toId: args['to_token'],
           toName: args['to_name']!,
           toAvatar: args['to_avatar'] ?? "",
         );

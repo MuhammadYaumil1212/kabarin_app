@@ -6,12 +6,14 @@ import 'package:kabarin_app/pages/common/values/colors.dart';
 import 'controller.dart';
 
 class VoiceCallView extends GetView<VoiceCallController> {
+  final String toId;
   final String toName;
   final String toAvatar;
   const VoiceCallView({
     super.key,
     required this.toName,
     required this.toAvatar,
+    required this.toId,
   });
 
   @override
@@ -109,7 +111,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print("Panggilan Ditolak");
+                          controller.goToChat(controller.state.contact);
                         },
                         child: Container(
                           width: 75.w,
@@ -227,7 +229,9 @@ class VoiceCallView extends GetView<VoiceCallController> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       GestureDetector(
-                        onTap: () => controller.endCall(),
+                        onTap: () {
+                          controller.goToChat(controller.state.contact);
+                        },
                         child: Container(
                           width: 75.w,
                           height: 75.w,

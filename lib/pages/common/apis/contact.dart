@@ -19,4 +19,21 @@ class ContactAPI {
     }).toList();
     return allData;
   }
+
+  static Future<ContactItem?> getContactById(String docId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+          .instance
+          .collection('contacts')
+          .doc(docId)
+          .get();
+      if (doc.exists) {
+        return ContactItem.fromFirestore(doc, null);
+      }
+      return null;
+    } catch (e) {
+      print("Error mengambil data kontak: $e");
+      return null;
+    }
+  }
 }

@@ -9,7 +9,6 @@ import '../../common/store/user.dart';
 class MessageController extends GetxController {
   MessageController();
   final state = MessageState();
-
   final displayName = "";
 
   @override
