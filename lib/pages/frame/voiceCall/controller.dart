@@ -158,6 +158,7 @@ class VoiceCallController extends GetxController {
   }
 
   Future<void> joinChannel() async {
+    print("Joined Channel");
     await Permission.microphone.request();
     EasyLoading.show(
       indicator: const CircularProgressIndicator(),

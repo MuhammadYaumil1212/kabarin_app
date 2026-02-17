@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kabarin_app/pages/common/style/color.dart';
 import 'package:kabarin_app/pages/frame/chat/controller.dart';
 import 'package:kabarin_app/pages/frame/chat/widgets/featureItem.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../common/values/colors.dart';
 
@@ -239,8 +241,26 @@ class ChatView extends GetView<ChatController> {
           child: Row(
             children: [
               FeatureItem(
-                onTap: () {
-                  print("tap image");
+                onTap: () async {
+                  await requestPhotosPermission();
+                  final ImagePicker picker = ImagePicker();
+                  try {
+                    final XFile? image = await picker.pickImage(
+                      source: ImageSource.gallery,
+                      imageQuality: 80,
+                      maxWidth: 1920,
+                      maxHeight: 1080,
+                      requestFullMetadata: false,
+                    );
+
+                    if (image != null) {
+                      print("image path: ${image.path}");
+                    } else {
+                      print("User membatalkan pemilihan gambar.");
+                    }
+                  } catch (e) {
+                    print("Terjadi kesalahan saat memilih gambar: $e");
+                  }
                 },
                 icon: Icon(Icons.image_outlined, color: AppColors.thirdElement),
               ),
@@ -259,5 +279,18 @@ class ChatView extends GetView<ChatController> {
         ),
       ],
     );
+  }
+
+  Future<void> requestPhotosPermission() async {
+    var status = await Permission.photos.status;
+    if (status.isDenied) {
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.photos,
+        Permission.camera,
+      ].request();
+      if (statuses[Permission.photos] == PermissionStatus.denied) {
+        openAppSettings();
+      }
+    }
   }
 }
