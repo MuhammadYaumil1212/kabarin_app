@@ -2,11 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kabarin_app/pages/common/entities/entities.dart';
 
 class ContactAPI {
-  // static Future<ContactResponseEntity> post_contact() async {
-  //   var response = await HttpUtil().post('api/contact');
-  //   return ContactResponseEntity.fromJson(response);
-  // }
-
   static Future<List<ContactItem>?> postContact() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('contacts')
